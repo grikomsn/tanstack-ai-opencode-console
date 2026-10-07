@@ -1,0 +1,191 @@
+{
+  "date": "2026-10-07",
+  "scope": "Go inference only; Console inference deferred",
+  "liveTestDependencies": {
+    "@tanstack/ai": "0.64.0",
+    "@tanstack/ai-openai": "0.26.0",
+    "@tanstack/ai-anthropic": "0.19.4",
+    "@tanstack/ai-gemini": "0.34.2"
+  },
+  "deviceSession": {
+    "root": "https://opencode.ai/inference/go",
+    "credential": "device-session",
+    "tests": [
+      {
+        "model": "glm-5.3-flash",
+        "api": "chat-completions",
+        "requests": [
+          {
+            "path": "/inference/go/openai/v1/chat/completions",
+            "status": 200
+          }
+        ],
+        "textChunks": 1,
+        "thinkingChunks": 45,
+        "finished": true,
+        "error": false,
+        "usage": {
+          "promptTokens": 18,
+          "completionTokens": 114,
+          "totalTokens": 132
+        },
+        "passed": true
+      },
+      {
+        "model": "minimax-m2.7",
+        "api": "messages",
+        "requests": [
+          {
+            "path": "/inference/go/anthropic/v1/messages",
+            "status": 200
+          }
+        ],
+        "textChunks": 1,
+        "thinkingChunks": 3,
+        "finished": true,
+        "error": false,
+        "usage": {
+          "promptTokens": 47,
+          "completionTokens": 50,
+          "totalTokens": 97
+        },
+        "passed": true
+      },
+      {
+        "model": "gpt-6-luna",
+        "api": "responses",
+        "requests": [
+          {
+            "path": "/inference/go/openai/v1/responses",
+            "status": 200
+          }
+        ],
+        "textChunks": 1,
+        "thinkingChunks": 0,
+        "finished": true,
+        "error": false,
+        "usage": {
+          "promptTokens": 12,
+          "completionTokens": 16,
+          "totalTokens": 28,
+          "completionTokensDetails": {
+            "reasoningTokens": 9
+          }
+        },
+        "passed": true
+      },
+      {
+        "model": "qwen3.8-max",
+        "api": "messages",
+        "requests": [
+          {
+            "path": "/inference/go/anthropic/v1/messages",
+            "status": 200
+          }
+        ],
+        "textChunks": 1,
+        "thinkingChunks": 8,
+        "finished": true,
+        "error": false,
+        "usage": {
+          "promptTokens": 67,
+          "completionTokens": 27,
+          "totalTokens": 94
+        },
+        "passed": true
+      }
+    ],
+    "workspaceScoped": true,
+    "catalogCount": 36
+  },
+  "projectServerKey": {
+    "root": "https://opencode.ai/inference/go",
+    "credential": "project-server-key",
+    "tests": [
+      {
+        "model": "glm-5.3-flash",
+        "api": "chat-completions",
+        "requests": [
+          {
+            "path": "/inference/go/openai/v1/chat/completions",
+            "status": 403
+          }
+        ],
+        "textChunks": 0,
+        "thinkingChunks": 0,
+        "finished": false,
+        "error": true,
+        "passed": false
+      },
+      {
+        "model": "minimax-m2.7",
+        "api": "messages",
+        "requests": [
+          {
+            "path": "/inference/go/anthropic/v1/messages",
+            "status": 403
+          }
+        ],
+        "textChunks": 0,
+        "thinkingChunks": 0,
+        "finished": false,
+        "error": true,
+        "passed": false
+      },
+      {
+        "model": "gpt-6-luna",
+        "api": "responses",
+        "requests": [
+          {
+            "path": "/inference/go/openai/v1/responses",
+            "status": 403
+          }
+        ],
+        "textChunks": 0,
+        "thinkingChunks": 0,
+        "finished": false,
+        "error": true,
+        "passed": false
+      },
+      {
+        "model": "qwen3.8-max",
+        "api": "messages",
+        "requests": [
+          {
+            "path": "/inference/go/anthropic/v1/messages",
+            "status": 403
+          }
+        ],
+        "textChunks": 0,
+        "thinkingChunks": 0,
+        "finished": false,
+        "error": true,
+        "passed": false
+      }
+    ],
+    "catalogCount": 36
+  },
+  "projectServerKeyDiagnostic": {
+    "root": "https://opencode.ai/inference/go",
+    "credential": "project-server-key",
+    "tests": [
+      {
+        "model": "glm-5.3-flash",
+        "api": "chat-completions",
+        "requests": [
+          {
+            "path": "/inference/go/openai/v1/chat/completions",
+            "status": 403,
+            "failure": "go-subscription"
+          }
+        ],
+        "textChunks": 0,
+        "thinkingChunks": 0,
+        "finished": false,
+        "error": true,
+        "passed": false
+      }
+    ],
+    "catalogCount": 36
+  }
+}

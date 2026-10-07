@@ -1,0 +1,41 @@
+{
+  "name": "tanstack-ai-opencode-console-workspace",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "build": "npm run build --workspace tanstack-ai-opencode-console && npm run build --workspace @opencode-console/chat-example",
+    "dev": "npm run build --workspace tanstack-ai-opencode-console && npm run dev --workspace @opencode-console/chat-example",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run format:check && npm run build && npm run typecheck && npm test && npm run pack:check",
+    "pack:check": "node scripts/check-package.mjs",
+    "verify:auth": "npm run build --workspace tanstack-ai-opencode-console && node scripts/verify-console-auth.mjs",
+    "verify:go": "npm run build --workspace tanstack-ai-opencode-console && node --env-file-if-exists=.env scripts/verify-go-inference.mjs",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "npm run check && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "3.0.3",
+    "@tanstack/ai": "0.65.0",
+    "@types/node": "26.6.4",
+    "prettier": "3.9.9",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  },
+  "overrides": {
+    "concurrently": {
+      "shell-quote": "1.12.0"
+    }
+  }
+}

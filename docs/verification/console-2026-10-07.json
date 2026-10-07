@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-07",
+  "scope": "Console inference through the existing demo session",
+  "workspace": "console-billed-workspace",
+  "workspaceLocked": true,
+  "goEntitlement": {
+    "workspace": "console-billed-workspace",
+    "workspaceMatched": true,
+    "credential": "device-session",
+    "model": "glm-5.3-flash",
+    "status": 403,
+    "failure": "go-subscription",
+    "result": "Go subscription access denied"
+  },
+  "tests": [
+    {
+      "model": "glm-5.3-flash",
+      "api": "chat-completions",
+      "demoHttpStatus": 200,
+      "textChunks": 1,
+      "thinkingChunks": 7,
+      "finished": true,
+      "error": false,
+      "usage": [
+        {
+          "inputTokens": 47,
+          "outputTokens": 19,
+          "totalTokens": 66
+        }
+      ],
+      "passed": true
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "api": "responses",
+      "demoHttpStatus": 200,
+      "textChunks": 1,
+      "thinkingChunks": 0,
+      "finished": true,
+      "error": false,
+      "usage": [
+        {
+          "inputTokens": 45,
+          "outputTokens": 5,
+          "totalTokens": 50
+        }
+      ],
+      "passed": true
+    },
+    {
+      "model": "claude-sonnet-5",
+      "api": "messages",
+      "demoHttpStatus": 200,
+      "textChunks": 1,
+      "thinkingChunks": 0,
+      "finished": true,
+      "error": false,
+      "usage": [
+        {
+          "inputTokens": 58,
+          "outputTokens": 4,
+          "totalTokens": 62
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "browserToolRoundTrip": {
+    "model": "glm-5.3-flash",
+    "tool": "getCurrentTime",
+    "toolCompleted": true,
+    "assistantReplyObserved": true
+  },
+  "uiVerification": {
+    "desktop": true,
+    "mobileViewport": {
+      "width": 390,
+      "height": 844,
+      "horizontalOverflow": false
+    },
+    "approvedWorkspacePreserved": true
+  }
+}

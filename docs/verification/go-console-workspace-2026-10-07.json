@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-07",
+  "scope": "Go access check for the same Console-enabled workspace",
+  "root": "https://opencode.ai/inference/go",
+  "credential": "device-session",
+  "tests": [
+    {
+      "model": "glm-5.3-flash",
+      "api": "chat-completions",
+      "requests": [
+        {
+          "path": "/inference/go/openai/v1/chat/completions",
+          "status": 403,
+          "failure": "go-subscription"
+        }
+      ],
+      "textChunks": 0,
+      "thinkingChunks": 0,
+      "finished": false,
+      "error": true,
+      "passed": false
+    }
+  ],
+  "workspace": "console-billed-workspace",
+  "workspaceMatched": true,
+  "workspaceScoped": true,
+  "catalogCount": 36
+}

@@ -1,0 +1,73 @@
+{
+  "name": "tanstack-ai-opencode-console",
+  "version": "0.1.0",
+  "description": "TanStack AI adapter for the OpenCode v2 Console inference APIs",
+  "type": "module",
+  "license": "MIT",
+  "author": "Griko Nibras",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grikomsn/tanstack-ai-opencode-console.git",
+    "directory": "packages/tanstack-ai-opencode-console"
+  },
+  "homepage": "https://github.com/grikomsn/tanstack-ai-opencode-console#readme",
+  "bugs": {
+    "url": "https://github.com/grikomsn/tanstack-ai-opencode-console/issues"
+  },
+  "keywords": [
+    "tanstack",
+    "ai",
+    "opencode",
+    "console",
+    "adapter",
+    "inference",
+    "streaming"
+  ],
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./byok": {
+      "types": "./dist/byok.d.ts",
+      "import": "./dist/byok.js"
+    },
+    "./auth": {
+      "types": "./dist/auth.d.ts",
+      "import": "./dist/auth.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\" && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test test/*.test.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@tanstack/ai-openai": "0.27.0",
+    "@tanstack/ai-anthropic": "0.19.5",
+    "@tanstack/ai-gemini": "0.35.0"
+  },
+  "peerDependencies": {
+    "@tanstack/ai": "^0.65.0"
+  },
+  "devDependencies": {
+    "@tanstack/ai": "0.65.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}
