@@ -10,7 +10,7 @@ TanStack's existing [`@tanstack/ai-opencode`](https://tanstack.com/ai/latest/doc
 npm install @tanstack/ai tanstack-ai-opencode-console
 ```
 
-Requires Node.js 22.19+ and `@tanstack/ai` 0.65.x. This repository includes the publishable package and a private example app; the initial package is prepared locally for publication.
+Requires Node.js 22.19+ and `@tanstack/ai` 0.65.x. This repository includes the [published npm package](https://www.npmjs.com/package/tanstack-ai-opencode-console) and a private example app.
 
 ## Quick start
 

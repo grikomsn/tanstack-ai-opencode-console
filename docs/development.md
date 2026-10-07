@@ -32,13 +32,15 @@ Service keys and user sessions share the v2 inference transport. The separate Co
 
 ## Publishing
 
-The initial package version is `0.1.0`. Review the package with `npm run check`, then publish the adapter workspace with an authenticated npm account when authorized:
+Version `0.1.0` was published locally without provenance to bootstrap the npm package. Review every release with `npm run check`, then publish the adapter workspace from its configured CI environment when authorized:
 
 ```sh
 npm publish --workspace tanstack-ai-opencode-console
 ```
 
-Provenance requires a supported CI publishing environment. For later changes, add a Changeset, run `npm run version-packages`, review version/changelog updates, and use `npm run release`. The example and root are private and cannot be published by Changesets.
+The package keeps `publishConfig.provenance:true` for future CI releases. An explicitly approved local publish can override it for that invocation with `npm publish --workspace tanstack-ai-opencode-console --provenance=false`. Configure [npm trusted publishing](https://docs.npmjs.com/trusted-publishers) for future releases with provenance from a supported CI environment.
+
+For later changes, add a Changeset, run `npm run version-packages`, review version/changelog updates, and use `npm run release`. The example and root are private and cannot be published by Changesets.
 
 The CI workflow runs on the pinned Node 22, 24, and 26 patch releases on Ubuntu 26.04. Checkout and setup-node use full release commit SHAs, with their version tags recorded in comments. There is no automatic publishing workflow. Submitting this package to TanStack's community adapter list is a separate upstream change, following the [community guide](https://tanstack.com/ai/latest/docs/community-adapters/guide).
 
