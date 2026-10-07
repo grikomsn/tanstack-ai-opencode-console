@@ -4,6 +4,8 @@ A React and Vite chat with a local Node backend. The server signs in to Console 
 
 Use the [published npm adapter](https://www.npmjs.com/package/tanstack-ai-opencode-console) in your own app. This example runs from the repository's local workspace package; see the [release history](../../docs/releases.md) for published versions and source tags.
 
+The presentation follows the dark surfaces, orange accent, and assistant message treatment of the [official TanStack AI Basic Chat example](https://tanstack.com/ai/latest/docs/framework/react/examples/basic-chat), while retaining this demo's Console authentication and model controls. The OpenCode icon uses the native geometry and colors from its [brand assets](https://opencode.ai/brand).
+
 The connection panel shows the approved workspace and account before the model selector. Protocol information is available under **Adapter details**. The compact layout keeps the transcript and composer visible on desktop and stacks the controls above chat on narrow screens.
 
 From the repository root:

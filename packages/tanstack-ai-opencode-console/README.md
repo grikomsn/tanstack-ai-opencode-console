@@ -1,12 +1,37 @@
-# tanstack-ai-opencode-console
+<div align="center">
+  <img src="https://raw.githubusercontent.com/grikomsn/tanstack-ai-opencode-console/main/media/header-opencode-console.png" alt="TanStack AI + OpenCode Console — community adapter for OpenCode v2 inference" width="900" />
+</div>
+
+<br />
+
+<div align="center">
+  <a href="https://www.npmjs.com/package/tanstack-ai-opencode-console"><img src="https://img.shields.io/npm/v/tanstack-ai-opencode-console?color=e66845" alt="npm version" /></a>
+  <a href="https://www.npmjs.com/package/tanstack-ai-opencode-console"><img src="https://img.shields.io/npm/dm/tanstack-ai-opencode-console" alt="npm downloads" /></a>
+  <a href="https://github.com/grikomsn/tanstack-ai-opencode-console/actions/workflows/ci.yml"><img src="https://github.com/grikomsn/tanstack-ai-opencode-console/actions/workflows/ci.yml/badge.svg" alt="CI status" /></a>
+</div>
+
+<br />
+
+# TanStack AI · OpenCode Console
 
 [npm package](https://www.npmjs.com/package/tanstack-ai-opencode-console) · [GitHub releases](https://github.com/grikomsn/tanstack-ai-opencode-console/releases)
 
 Community TanStack AI text adapter for the **OpenCode v2 Console inference APIs**. It calls `https://opencode.ai/inference` directly; it does not run the OpenCode CLI.
 
+## Start here
+
+- [Full documentation](https://github.com/grikomsn/tanstack-ai-opencode-console#readme)
+- [React chat example](https://github.com/grikomsn/tanstack-ai-opencode-console/tree/main/examples/chat)
+- [Console authentication](https://github.com/grikomsn/tanstack-ai-opencode-console/blob/main/docs/authentication.md)
+- [OpenCode Go](https://github.com/grikomsn/tanstack-ai-opencode-console/blob/main/docs/go.md)
+
+## Install
+
 ```sh
 npm install @tanstack/ai tanstack-ai-opencode-console
 ```
+
+## Streaming chat
 
 ```ts
 import { chat } from "@tanstack/ai";
@@ -23,7 +48,11 @@ for await (const event of stream) {
 }
 ```
 
-Set `OPENCODE_API_KEY` on the server or pass `apiKey`. Alternatively, use the server-only device sign-in helpers:
+Set `OPENCODE_API_KEY` on the server or pass `apiKey`.
+
+## Console sign-in
+
+Alternatively, use the server-only device sign-in helpers:
 
 ```ts
 import {
@@ -43,6 +72,8 @@ Device sign-in requests workspace-scoped access. Console currently labels this p
 The `/auth` entry also exports `refreshOpenCodeConsoleSession` and `revokeOpenCodeConsoleSession`. The supplier keeps rotated tokens in memory with per-session single-flight refresh. `getSession()` returns a copy for caller-managed secure storage. `clear()` deletes only local state; remote revocation is explicit. Do not send tokens to a browser. See [authentication verification](https://github.com/grikomsn/tanstack-ai-opencode-console/blob/main/docs/authentication.md) for evidence and limits.
 
 Set `apiKey: ""` to omit authentication; gateway eligibility rules still apply. A live external free-tier call on October 5, 2026 returned HTTP 403 restricting usage to OpenCode clients. Use an eligible paid model. Requires Node 22.19+ and `@tanstack/ai` 0.65.x.
+
+## Routing and configuration
 
 Exports `opencodeConsoleText`, `OpenCodeConsoleTextAdapter`, `createOpenCodeConsole`, `listOpenCodeConsoleModels`, `parseOpenCodeConsoleModels`, `resolveOpenCodeConsoleApi`, and `OPENCODE_CONSOLE_BASE_URL`. Import the browser-safe `opencodeConsoleByok` from `tanstack-ai-opencode-console/byok`.
 

@@ -1,10 +1,40 @@
-# tanstack-ai-opencode-console
+<div align="center">
+  <img src="media/header-opencode-console.png" alt="TanStack AI + OpenCode Console — community adapter for OpenCode v2 inference" width="900" />
+</div>
+
+<br />
+
+<div align="center">
+  <a href="https://www.npmjs.com/package/tanstack-ai-opencode-console"><img src="https://img.shields.io/npm/v/tanstack-ai-opencode-console?color=e66845" alt="npm version" /></a>
+  <a href="https://www.npmjs.com/package/tanstack-ai-opencode-console"><img src="https://img.shields.io/npm/dm/tanstack-ai-opencode-console" alt="npm downloads" /></a>
+  <a href="https://github.com/grikomsn/tanstack-ai-opencode-console/actions/workflows/ci.yml"><img src="https://github.com/grikomsn/tanstack-ai-opencode-console/actions/workflows/ci.yml/badge.svg" alt="CI status" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license" /></a>
+</div>
+
+<br />
+
+# TanStack AI · OpenCode Console
 
 [npm package](https://www.npmjs.com/package/tanstack-ai-opencode-console) · [GitHub releases](https://github.com/grikomsn/tanstack-ai-opencode-console/releases) · [Release history](docs/releases.md)
 
 A community [TanStack AI](https://tanstack.com/ai) adapter for the **OpenCode v2 Console inference APIs**. Call hosted models directly from your server through `https://opencode.ai/inference`.
 
 TanStack's existing [`@tanstack/ai-opencode`](https://tanstack.com/ai/latest/docs/adapters/opencode) adapter runs the OpenCode CLI. This package connects to the inference service; it needs no CLI installation or local OpenCode process.
+
+## Start here
+
+- [Quick start](#quick-start) — stream a response from a server or script.
+- [React chat example](examples/chat) — run the demo with server-side credentials.
+- [Console sign-in](docs/authentication.md) — connect a workspace without an API key.
+- [OpenCode Go](docs/go.md) — configure the separate subscription gateway.
+- [Release history](docs/releases.md) — published versions and verification evidence.
+
+## What it supports
+
+- Streaming text through TanStack's Responses, Chat Completions, Anthropic Messages, and Gemini adapters.
+- Tool calls, reasoning, usage, and structured output through the selected native adapter, where the model supports them.
+- Service keys or workspace-scoped Console device sign-in, with credentials kept on your server.
+- Model discovery, explicit protocol overrides, cancellation, and configurable transport.
 
 ## Install
 
@@ -206,5 +236,7 @@ The published package is under `packages/tanstack-ai-opencode-console`; the exam
 - [OpenCode for Copilot Chat](https://github.com/grikomsn/opencode-copilot-chat)
 - [Pi OpenCode Console provider](https://github.com/grikomsn/pi-provider-opencode-console)
 - [OpenAI OAuth for Copilot Chat](https://github.com/grikomsn/openai-oauth-copilot-chat)
+- [TanStack AI README](https://github.com/TanStack/ai) and [React basic chat example](https://tanstack.com/ai/latest/docs/framework/react/examples/basic-chat) — README and demo styling references.
+- [Brand assets and header prompt](media/README.md)
 
 Unofficial community project. Licensed under [MIT](LICENSE).

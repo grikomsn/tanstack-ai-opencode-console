@@ -2,4 +2,4 @@
 "tanstack-ai-opencode-console": patch
 ---
 
-Add links to the published npm package and GitHub releases in the package README.
+Refresh the package README with a dedicated community-adapter header, package badges, quick navigation, and links to the published npm package and GitHub releases.

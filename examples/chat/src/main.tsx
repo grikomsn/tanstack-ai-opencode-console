@@ -54,61 +54,67 @@ function Message({ message }: { message: UIMessage }) {
       className={`message message-${message.role}`}
       aria-label={`${message.role} message`}
     >
-      <div className="message-label">
-        <span className={`avatar avatar-${message.role}`}>
-          {message.role === "user" ? "Y" : "O"}
-        </span>
-        {message.role === "user" ? "You" : "OpenCode"}
+      <div className={`avatar avatar-${message.role}`} aria-hidden="true">
+        {message.role === "user" ? (
+          "U"
+        ) : (
+          <img src="/opencode-mark-dark.svg" alt="" />
+        )}
       </div>
-      <div className="message-content">
-        {message.parts.map((part, index) => {
-          if (part.type === "text") {
-            return (
-              <div className="message-text" key={index}>
-                {part.content}
-              </div>
-            );
-          }
-          if (part.type === "thinking") {
-            return (
-              <details className="reasoning" key={index}>
-                <summary>
-                  Reasoning <span>model trace</span>
-                </summary>
-                <div>
-                  {part.content ||
-                    "The provider returned an encrypted reasoning block."}
+      <div className="message-body">
+        <div className="message-label">
+          {message.role === "user" ? "You" : "OpenCode"}
+        </div>
+        <div className="message-content">
+          {message.parts.map((part, index) => {
+            if (part.type === "text") {
+              return (
+                <div className="message-text" key={index}>
+                  {part.content}
                 </div>
-              </details>
-            );
-          }
-          if (part.type === "tool-call") {
-            return (
-              <details className="tool-card" key={index} open>
-                <summary>
-                  <span className="tool-icon">↗</span> {part.name}
-                  <span>{part.state}</span>
-                </summary>
-                <pre>{pretty(part.input ?? part.arguments)}</pre>
-                {part.output !== undefined && (
-                  <pre className="tool-output">{pretty(part.output)}</pre>
-                )}
-              </details>
-            );
-          }
-          if (part.type === "tool-result") {
-            return (
-              <details className="tool-card tool-result" key={index}>
-                <summary>
-                  <span className="tool-icon">✓</span> Tool result
-                  <span>{part.state}</span>
-                </summary>
-                <pre>{pretty(part.content)}</pre>
-              </details>
-            );
-          }
-          return null;
-        })}
+              );
+            }
+            if (part.type === "thinking") {
+              return (
+                <details className="reasoning" key={index}>
+                  <summary>
+                    Reasoning <span>model trace</span>
+                  </summary>
+                  <div>
+                    {part.content ||
+                      "The provider returned an encrypted reasoning block."}
+                  </div>
+                </details>
+              );
+            }
+            if (part.type === "tool-call") {
+              return (
+                <details className="tool-card" key={index} open>
+                  <summary>
+                    <span className="tool-icon">↗</span> {part.name}
+                    <span>{part.state}</span>
+                  </summary>
+                  <pre>{pretty(part.input ?? part.arguments)}</pre>
+                  {part.output !== undefined && (
+                    <pre className="tool-output">{pretty(part.output)}</pre>
+                  )}
+                </details>
+              );
+            }
+            if (part.type === "tool-result") {
+              return (
+                <details className="tool-card tool-result" key={index}>
+                  <summary>
+                    <span className="tool-icon">✓</span> Tool result
+                    <span>{part.state}</span>
+                  </summary>
+                  <pre>{pretty(part.content)}</pre>
+                </details>
+              );
+            }
+            return null;
+          })}
+        </div>
       </div>
     </article>
   );
@@ -165,7 +171,15 @@ function Chat({
     <section className="chat-panel" aria-label="Chat">
       <div className="chat-toolbar">
         <div className="session-status">
-          <span className={isLoading ? "status-dot pulsing" : "status-dot"} />
+          <span
+            className={
+              isLoading
+                ? "status-dot pulsing"
+                : canChat
+                  ? "status-dot"
+                  : "status-dot inactive"
+            }
+          />
           {isLoading
             ? "Generating"
             : canChat
@@ -190,10 +204,13 @@ function Chat({
       >
         {messages.length === 0 && (
           <div className="empty-chat">
-            <div className="empty-mark" aria-hidden="true">
-              ⌘
-            </div>
-            <h2>Start a conversation</h2>
+            <img
+              className="empty-mark"
+              src="/opencode-mark-dark.svg"
+              alt=""
+              aria-hidden="true"
+            />
+            <h2>Basic Chat</h2>
             <p>
               {canChat
                 ? `Send a message to ${model.id}.`
@@ -366,12 +383,19 @@ function App() {
     <div className="app-shell">
       <header className="site-header">
         <a className="brand" href="/" aria-label="OpenCode Console home">
-          <span className="brand-mark" aria-hidden="true">
-            ▰
-          </span>{" "}
-          <span>
-            OpenCode Console<small>TanStack AI adapter demo</small>
-          </span>
+          <img
+            className="brand-mark"
+            src="/opencode-mark-dark.svg"
+            alt=""
+            aria-hidden="true"
+          />
+          <div>
+            <h1>OpenCode Console</h1>
+            <span className="brand-caption">
+              <span>TanStack AI</span>
+              <span aria-hidden="true"> / </span>Basic chat example
+            </span>
+          </div>
         </a>
         <a
           className="source-link"
@@ -426,7 +450,7 @@ function App() {
             <p className="model-count" role="status">
               {loading
                 ? "Loading models…"
-                : `${catalog?.models.length ?? 0} models`}
+                : `${catalog?.models.length ?? 0} ${catalog?.models.length === 1 ? "model" : "models"}`}
             </p>
             {modelError && (
               <div className="error-banner model-error" role="alert">
@@ -467,9 +491,12 @@ function App() {
             />
           ) : (
             <section className="chat-panel unavailable-panel">
-              <div className="empty-mark" aria-hidden="true">
-                ⌘
-              </div>
+              <img
+                className="empty-mark"
+                src="/opencode-mark-dark.svg"
+                alt=""
+                aria-hidden="true"
+              />
               <h2>
                 {loading
                   ? "Connecting to OpenCode…"
