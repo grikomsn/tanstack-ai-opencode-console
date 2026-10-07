@@ -2,6 +2,8 @@
 
 A React and Vite chat with a local Node backend. The server signs in to Console or uses a configured service key, discovers OpenCode v2 inference models, selects the adapter protocol, and streams TanStack AI events to `useChat`. The UI displays text, available reasoning traces, tool calls, tool results, errors, and a Stop button.
 
+Use the [published npm adapter](https://www.npmjs.com/package/tanstack-ai-opencode-console) in your own app. This example runs from the repository's local workspace package; see the [release history](../../docs/releases.md) for published versions and source tags.
+
 The connection panel shows the approved workspace and account before the model selector. Protocol information is available under **Adapter details**. The compact layout keeps the transcript and composer visible on desktop and stacks the controls above chat on narrow screens.
 
 From the repository root:

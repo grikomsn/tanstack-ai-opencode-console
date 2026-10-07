@@ -32,7 +32,7 @@ Service keys and user sessions share the v2 inference transport. The separate Co
 
 ## Publishing
 
-Version `0.1.0` was published locally without provenance to bootstrap the npm package. Review every release with `npm run check`, then publish the adapter workspace from its configured CI environment when authorized:
+Version [0.1.0](https://www.npmjs.com/package/tanstack-ai-opencode-console/v/0.1.0) was published locally without provenance to bootstrap the npm package. The matching [GitHub release](https://github.com/grikomsn/tanstack-ai-opencode-console/releases/tag/tanstack-ai-opencode-console%400.1.0) uses the source tag `tanstack-ai-opencode-console@0.1.0`. See [release history](releases.md) for artifact and verification details. Review every release with `npm run check`, then publish the adapter workspace from its configured CI environment when authorized:
 
 ```sh
 npm publish --workspace tanstack-ai-opencode-console

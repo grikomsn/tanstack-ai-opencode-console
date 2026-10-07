@@ -1,5 +1,7 @@
 # tanstack-ai-opencode-console
 
+[npm package](https://www.npmjs.com/package/tanstack-ai-opencode-console) · [GitHub releases](https://github.com/grikomsn/tanstack-ai-opencode-console/releases)
+
 Community TanStack AI text adapter for the **OpenCode v2 Console inference APIs**. It calls `https://opencode.ai/inference` directly; it does not run the OpenCode CLI.
 
 ```sh

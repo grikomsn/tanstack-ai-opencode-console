@@ -1,5 +1,7 @@
 # tanstack-ai-opencode-console
 
+[npm package](https://www.npmjs.com/package/tanstack-ai-opencode-console) · [GitHub releases](https://github.com/grikomsn/tanstack-ai-opencode-console/releases) · [Release history](docs/releases.md)
+
 A community [TanStack AI](https://tanstack.com/ai) adapter for the **OpenCode v2 Console inference APIs**. Call hosted models directly from your server through `https://opencode.ai/inference`.
 
 TanStack's existing [`@tanstack/ai-opencode`](https://tanstack.com/ai/latest/docs/adapters/opencode) adapter runs the OpenCode CLI. This package connects to the inference service; it needs no CLI installation or local OpenCode process.
@@ -192,7 +194,7 @@ npm run changeset
 
 The repository uses npm workspaces, Node tests, TypeScript, Prettier, Changesets, and CI on Node 22/24/26. `npm run check` builds both workspaces, checks types and formatting, runs mocked protocol/example integration tests, and validates a packed tarball in an isolated consumer. Tests make no live inference calls.
 
-The publishable package is under `packages/tanstack-ai-opencode-console`; the example is private. See [development and release notes](docs/development.md). Package publication and a TanStack community-list submission are separate release steps.
+The published package is under `packages/tanstack-ai-opencode-console`; the example is private. See [release history](docs/releases.md) and [development instructions](docs/development.md). Package publication and a TanStack community-list submission are separate release steps.
 
 ## References
 
