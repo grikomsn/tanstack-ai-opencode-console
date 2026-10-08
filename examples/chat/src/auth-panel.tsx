@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import type { ExampleAuthState } from "../auth.js";
 
+function boundedPollInterval(interval: number | undefined): number {
+  return typeof interval === "number" && Number.isFinite(interval)
+    ? Math.max(1000, Math.min(30_000, Math.round(interval)))
+    : 1000;
+}
+
 export function AuthPanel({
   state,
   onChange,
@@ -12,12 +18,34 @@ export function AuthPanel({
   const [error, setError] = useState<string | null>(null);
   const actionGeneration = useRef(0);
   const actionPending = useRef(false);
+  const pollInterval = useRef(boundedPollInterval(state?.statusPollIntervalMs));
+  const schedulePoll = useRef<((delay: number) => void) | null>(null);
+
+  useEffect(() => {
+    const delay = boundedPollInterval(state?.statusPollIntervalMs);
+    if (delay !== pollInterval.current) {
+      pollInterval.current = delay;
+      schedulePoll.current?.(delay);
+    }
+  }, [state?.statusPollIntervalMs]);
 
   useEffect(() => {
     const controller = new AbortController();
     let pollInFlight = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const schedule = (delay: number) => {
+      if (controller.signal.aborted) return;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        void poll();
+      }, delay);
+    };
     const poll = async () => {
-      if (pollInFlight || actionPending.current) return;
+      if (pollInFlight) return;
+      if (actionPending.current) {
+        schedule(pollInterval.current);
+        return;
+      }
       pollInFlight = true;
       const generation = actionGeneration.current;
       try {
@@ -32,6 +60,7 @@ export function AuthPanel({
           generation === actionGeneration.current &&
           !actionPending.current
         ) {
+          pollInterval.current = boundedPollInterval(next.statusPollIntervalMs);
           setError(null);
           onChange(next);
         }
@@ -48,16 +77,15 @@ export function AuthPanel({
           );
       } finally {
         pollInFlight = false;
+        schedule(pollInterval.current);
       }
     };
+    schedulePoll.current = schedule;
     void poll();
-    // Other tabs share this local server session. Sync even after sign-in settles.
-    const interval = setInterval(() => {
-      void poll();
-    }, 1000);
     return () => {
       controller.abort();
-      clearInterval(interval);
+      if (timer) clearTimeout(timer);
+      if (schedulePoll.current === schedule) schedulePoll.current = null;
     };
   }, [onChange]);
 
@@ -68,10 +96,16 @@ export function AuthPanel({
     setError(null);
     if (route === "start")
       onChange({
+        ...(state ?? {}),
         connectionRevision: state?.connectionRevision ?? "",
         mode: "session",
         keyConfigured: state?.keyConfigured ?? false,
         phase: "starting",
+        canChat: false,
+        statusPollIntervalMs: 1000,
+        pending: undefined,
+        session: undefined,
+        error: undefined,
       });
     try {
       const response = await fetch(`/api/auth/${route}`, {
@@ -99,34 +133,48 @@ export function AuthPanel({
   }
 
   const waiting = state?.phase === "pending" || state?.phase === "starting";
+  const availableModes = state?.availableModes ?? ["api-key", "session"];
+  const hostedSession =
+    availableModes.length === 1 && availableModes[0] === "session";
   const workspace = state?.session?.organizations.find(
     (org) => org.id === state.session?.orgId,
   );
   return (
     <section className="auth-panel" aria-label="Authentication">
       <h2 className="panel-title">Connection</h2>
-      <div className="auth-modes" role="group" aria-label="Authentication mode">
-        <button
-          type="button"
-          aria-pressed={state?.mode === "api-key"}
-          disabled={busy && !waiting}
-          onClick={() => {
-            void action("mode", { mode: "api-key" });
-          }}
+      {state && availableModes.length > 1 && (
+        <div
+          className="auth-modes"
+          role="group"
+          aria-label="Authentication mode"
         >
-          Server key
-        </button>
-        <button
-          type="button"
-          aria-pressed={state?.mode === "session"}
-          disabled={busy && !waiting}
-          onClick={() => {
-            void action("mode", { mode: "session" });
-          }}
-        >
-          Console sign-in
-        </button>
-      </div>
+          <button
+            type="button"
+            aria-pressed={state?.mode === "api-key"}
+            disabled={busy && !waiting}
+            onClick={() => {
+              void action("mode", { mode: "api-key" });
+            }}
+          >
+            Server key
+          </button>
+          <button
+            type="button"
+            aria-pressed={state?.mode === "session"}
+            disabled={busy && !waiting}
+            onClick={() => {
+              void action("mode", { mode: "session" });
+            }}
+          >
+            Console sign-in
+          </button>
+        </div>
+      )}
+      {!state && (
+        <p className="auth-note" role="status">
+          Checking your connection…
+        </p>
+      )}
       {state?.mode === "api-key" && (
         <p className="auth-note">
           {state.keyConfigured
@@ -235,6 +283,12 @@ export function AuthPanel({
             </>
           )}
         </>
+      )}
+      {hostedSession && (
+        <p className="auth-note">
+          Your Console tokens stay in shared server-side session storage. Each
+          visitor has a separate session.
+        </p>
       )}
       {(error || state?.error) && (
         <div className="error-banner model-error" role="alert">

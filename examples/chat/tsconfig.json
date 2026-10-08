@@ -8,5 +8,5 @@
     "noEmit": true,
     "types": ["node", "vite/client"]
   },
-  "include": ["src", "server.ts", "auth.ts", "test", "vite.config.ts"]
+  "include": ["src", "*.ts", "test", "../../api"]
 }

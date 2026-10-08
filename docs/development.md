@@ -1,6 +1,6 @@
 # Development and releases
 
-Use Node.js 22.19+ and npm. The root lockfile covers the publishable adapter in `packages/tanstack-ai-opencode-console` and the private Vite/React example in `examples/chat`.
+Use Node.js 24.x and npm for this workspace (`.node-version` pins the local patch release). The published adapter supports Node.js 22.19+; CI also checks adapter compatibility on Node 22 and 26. The root lockfile covers the publishable adapter in `packages/tanstack-ai-opencode-console` and the private Vite/React example in `examples/chat`.
 
 ```sh
 npm ci

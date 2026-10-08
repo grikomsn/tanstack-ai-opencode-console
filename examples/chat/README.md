@@ -1,12 +1,14 @@
 # Chat example
 
-A React and Vite chat with a local Node backend. The server signs in to Console or uses a configured service key, discovers OpenCode v2 inference models, selects the adapter protocol, and streams TanStack AI events to `useChat`. The UI displays text, available reasoning traces, tool calls, tool results, errors, and a Stop button.
+A React and Vite chat with a local Node backend and a Vercel Functions backend. The server signs in to Console or uses a configured service key, discovers OpenCode v2 inference models, selects the adapter protocol, and streams TanStack AI events to `useChat`. The UI displays text, available reasoning traces, tool calls, tool results, errors, and a Stop button.
 
 Use the [published npm adapter](https://www.npmjs.com/package/tanstack-ai-opencode-console) in your own app. This example runs from the repository's local workspace package; see the [release history](../../docs/releases.md) for published versions and source tags.
 
 The presentation follows the dark surfaces, orange accent, and assistant message treatment of the [official TanStack AI Basic Chat example](https://tanstack.com/ai/latest/docs/framework/react/examples/basic-chat), while retaining this demo's Console authentication and model controls. The OpenCode icon uses the native geometry and colors from its [brand assets](https://opencode.ai/brand).
 
 The connection panel shows the approved workspace and account before the model selector. Protocol information is available under **Adapter details**. The compact layout keeps the transcript and composer visible on desktop and stacks the controls above chat on narrow screens.
+
+For a hosted app with **per-visitor Console sign-in and encrypted shared session storage**, follow the [Vercel deployment guide](../../docs/vercel.md). Import the repository root as the Vercel project; `examples/chat` is not the deployment root. The local server behavior below remains separate.
 
 From the repository root:
 
@@ -34,9 +36,9 @@ Configuration is server-only:
 | `OPENCODE_MODEL`          | Preferred initial model if present in the catalog.       |
 | `OPENCODE_ALLOWED_MODELS` | Optional comma-separated subset of discovered model IDs. |
 
-The model menu contains currently discovered models supported by the adapter. Model discovery is cached for 30 seconds. With a server key configured or a signed-in session, `gpt-5-nano` is initially selected when available; `OPENCODE_MODEL` overrides that choice. Automatic selection follows the authenticated default after sign-in, while a model you explicitly chose is preserved if still available. Switching models starts a new chat. Enable **Current-time tool**, or choose the tool suggestion, to let the model execute `getCurrentTime` on the server; it only reads the UTC clock. Reasoning is displayed when the selected model and provider emit it. A model may decline to call a tool.
+The model menu contains currently discovered models supported by the adapter. The local server caches model discovery for 30 seconds. With a server key configured or a signed-in session, `gpt-5-nano` is initially selected when available; `OPENCODE_MODEL` overrides that choice. Automatic selection follows the authenticated default after sign-in, while a model you explicitly chose is preserved if still available. Switching models starts a new chat. Enable **Current-time tool**, or choose the tool suggestion, to let the model execute `getCurrentTime` on the server; it only reads the UTC clock. Reasoning is displayed when the selected model and provider emit it. A model may decline to call a tool.
 
-Both development and preview bind to `127.0.0.1`. Vite proxies `/api` to the backend at port 3001. The backend checks Origin and Host, limits requests to 128 KiB and 40 messages, uses only its own tool definitions, limits runs to three model turns and 2,048 output tokens per model turn, and cancels upstream inference when Stop or a disconnected client closes the stream. It provides local demo protections, not a deployed multi-user authentication system.
+Both development and preview bind to `127.0.0.1`. Vite proxies `/api` to the backend at port 3001. The backend checks Origin and Host, limits requests to 128 KiB and 40 messages, uses only its own tool definitions, limits runs to three model turns and 2,048 output tokens per model turn, and cancels upstream inference when Stop or a disconnected client closes the stream. These describe the local server. The Vercel backend uses each visitor's own Console account, shared encrypted session storage, and request-scoped cancellation; see the deployment guide for configuration and traffic controls.
 
 ```sh
 npm run build

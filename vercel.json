@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "fluid": true,
+  "installCommand": "npm ci && npm run build --workspace tanstack-ai-opencode-console",
+  "buildCommand": "npm run build --workspace @opencode-console/chat-example",
+  "outputDirectory": "examples/chat/dist",
+  "functions": {
+    "api/**/*.ts": {
+      "maxDuration": 240,
+      "supportsCancellation": true,
+      "includeFiles": "packages/tanstack-ai-opencode-console/{package.json,dist/**}"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/((?!api(?:/|$)).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "regions": ["sin1"]
+}

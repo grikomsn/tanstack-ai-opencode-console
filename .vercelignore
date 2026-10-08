@@ -1,0 +1,13 @@
+.git/
+.vercel/
+**/.env
+**/.env.*
+!**/.env.example
+**/*.log
+**/*.tgz
+coverage/
+logs/
+media/
+docs/verification/
+examples/chat/test/
+packages/tanstack-ai-opencode-console/test/

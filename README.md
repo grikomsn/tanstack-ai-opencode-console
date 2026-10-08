@@ -214,6 +214,8 @@ npm run dev
 
 Open `http://127.0.0.1:5173`. The React app uses TanStack's `useChat` and SSE transport. Its local Node server discovers models, selects the appropriate protocol, executes the time tool, and keeps the key out of the browser bundle. See [example configuration and tests](examples/chat/README.md).
 
+For a hosted demo with a separate Console session for each visitor, follow the [Vercel deployment guide](docs/vercel.md). It uses secure browser cookies and encrypted shared Redis storage.
+
 ## Development and release
 
 ```sh

@@ -11,6 +11,10 @@ import type {
 } from "tanstack-ai-opencode-console/auth";
 
 export interface ExampleAuthState {
+  /** Hosted demos may expose a smaller set of authentication choices. */
+  availableModes?: Array<"api-key" | "session">;
+  canChat?: boolean;
+  statusPollIntervalMs?: number;
   /** Non-secret identity of this server's current connection context. */
   connectionRevision: string;
   mode: "api-key" | "session";
@@ -44,7 +48,7 @@ interface AuthOptions {
   onChange: () => void;
 }
 
-function publicAuthError(cause: unknown): string {
+export function publicAuthError(cause: unknown): string {
   if (cause instanceof OpenCodeConsoleAuthError) return cause.message;
   // These parser errors are generated locally and contain no upstream data.
   const safeMessages = new Set([

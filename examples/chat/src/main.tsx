@@ -353,6 +353,7 @@ function App() {
           signal: controller.signal,
         });
         const body = (await response.json()) as Catalog & { error?: string };
+        if (controller.signal.aborted) return;
         if (!response.ok)
           throw new Error(body.error ?? "Could not load models.");
         if (!Array.isArray(body.models))
@@ -459,7 +460,9 @@ function App() {
             )}
             {!loading && !modelError && catalog?.models.length === 0 && (
               <p className="muted">
-                No supported models matched the server's model allowlist.
+                {catalog.authenticated
+                  ? "No supported models matched the server's model allowlist."
+                  : "Connect your Console account to load models."}
               </p>
             )}
             {selectedModel && (
@@ -487,7 +490,10 @@ function App() {
               key={`${selectedModel.id}:${auth?.connectionRevision}`}
               model={selectedModel}
               connectionRevision={auth?.connectionRevision ?? ""}
-              canChat={auth?.mode === "api-key" || auth?.phase === "signed-in"}
+              canChat={
+                auth?.canChat ??
+                (auth?.mode === "api-key" || auth?.phase === "signed-in")
+              }
             />
           ) : (
             <section className="chat-panel unavailable-panel">
